@@ -10,574 +10,771 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            字体族: Arial, 无衬线字体;
-            背景颜色: 白色;
-            color: black;
-            行高: 1.6;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
         }
-
         .header {
-            background-color: #f8f9fa;
-            内边距: 20px;
+            background-color: #1a1a2e;
+            padding: 20px;
             text-align: center;
-            下边框: 1像素 实线#ddd;
+            border-bottom: 3px solid #0f3460;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
         .header h1 {
-            字体大小: 28px;
-            下边距: 10像素;
+            font-size: 26px;
+            color: #e94560;
+            margin-bottom: 0;
+            flex: 1;
         }
-
+        .refresh-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        #refreshBtn {
+            padding: 8px 16px;
+            font-size: 13px;
+            background-color: #0f3460;
+            color: white;
+            border: 2px solid #16213e;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #refreshBtn:hover {
+            background-color: #16213e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        #refreshBtn.refreshing {
+            background-color: #e94560;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        #lastRefresh {
+            font-size: 12px;
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+            padding: 6px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
         .search-wrapper {
-            max-width: 700px;
-            边距: 40px 自动;
-            位置: 相对;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+            position: relative;
         }
-
         .search-container {
-            显示: flex;
-            gap: 12px;
+            display: flex;
+            gap: 10px;
         }
-
         #searchInput {
             flex: 1;
-            padding: 16px 24px;
-            font-size: 18px;
-            border: 3px solid #e0e0e0;
-            border-radius: 8px;
+            padding: 14px 20px;
+            font-size: 15px;
+            border: 3px solid #0f3460;
+            border-radius: 10px;
             transition: all 0.3s ease;
             outline: none;
         }
-
         #searchInput:focus {
-            border-color: #333;
-            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+            border-color: #e94560;
+            box-shadow: 0 0 0 4px rgba(233, 69, 96, 0.2);
         }
-
         #searchBtn {
-            padding: 16px 40px;
-            font-size: 18px;
-            background-color: #333;
+            padding: 14px 30px;
+            font-size: 15px;
+            background-color: #e94560;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: bold;
         }
-
         #searchBtn:hover {
-            background-color: #555;
-            transform: translateY(-1px);
+            background-color: #c73e54;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
         }
-
         .suggestions {
             position: absolute;
             top: calc(100% + 8px);
-            left: 0;
-            right: 0;
+            left: 20px;
+            right: 20px;
             background: white;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            max-height: 500px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            max-height: 400px;
             overflow-y: auto;
             z-index: 1000;
             display: none;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
         }
-
         .suggestions.active {
             display: block;
-            animation: slideDown 0.2s ease;
         }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         .suggestion-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 14px 20px;
+            padding: 12px;
             cursor: pointer;
-            border-bottom: 1px solid #f0f0f0;
-            transition: all 0.2s ease;
+            display: flex;
+            gap: 12px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
         }
-
         .suggestion-item:hover {
-            background-color: #f5f5f5;
-            padding-left: 28px;
+            background: #f0f0f0;
         }
-
         .suggestion-item:last-child {
             border-bottom: none;
         }
-
         .suggestion-item img {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             object-fit: cover;
-            border-radius: 6px;
-            flex-shrink: 0;
+            border-radius: 8px;
+            background: #eee;
         }
-
+        .suggestion-info {
+            flex: 1;
+        }
         .suggestion-info h4 {
-            font-size: 17px;
             margin-bottom: 4px;
-            font-weight: bold;
-            color: #222;
+            color: #1a1a2e;
+            font-size: 14px;
         }
-
         .suggestion-info p {
-            font-size: 13px;
+            margin: 2px 0;
+            font-size: 12px;
             color: #666;
-            margin-bottom: 2px;
         }
-
-        .games-container {
-            max-width: 1200px;
+        .game-grid {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
-        }
-
-        .games-grid {
+            padding: 0 20px 30px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
-
         .game-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: box-shadow 0.3s;
+            transition: all 0.3s ease;
         }
-
         .game-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
         }
-
         .game-card img {
             width: 100%;
-            height: 200px;
+            height: 160px;
             object-fit: cover;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            background: #f5f5f5;
+            background: #1a1a2e;
         }
-
+        .game-card-content {
+            padding: 15px;
+        }
         .game-card h3 {
-            font-size: 18px;
-            margin-bottom: 5px;
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: #1a1a2e;
+            line-height: 1.4;
         }
-
-        .game-card p {
-            font-size: 14px;
+        .game-card .name-en {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 6px;
+            font-style: italic;
+        }
+        .game-card .brand {
+            font-size: 12px;
             color: #666;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
-
-        .compare-modal {
+        .prices-row {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .price-item-small {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            padding: 3px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .price-item-small:last-child {
+            border-bottom: none;
+        }
+        .price-item-small .platform {
+            font-weight: bold;
+            color: #444;
+        }
+        .price-item-small .prices {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .price-item-small .original {
+            color: #999;
+            text-decoration: line-through;
+        }
+        .price-item-small .current {
+            color: #e94560;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            justify-content: center;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
             align-items: center;
-            z-index: 1000;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s;
         }
-
-        .compare-content {
-            background-color: white;
-            width: 90%;
-            max-width: 1000px;
-            border-radius: 8px;
-            padding: 30px;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 850px;
+            width: 100%;
             max-height: 90vh;
             overflow-y: auto;
+            animation: slideUp 0.3s;
         }
-
-        .close-btn {
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-
-        .game-detail-header {
+        .modal-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            padding: 20px;
             display: flex;
+            align-items: center;
             gap: 20px;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ddd;
         }
-
-        .game-detail-header img {
-            width: 200px;
-            height: 200px;
+        .modal-header img {
+            width: 140px;
+            height: 140px;
             object-fit: cover;
-            border-radius: 8px;
-            background: #f5f5f5;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
-
-        .game-info h2 {
-            font-size: 24px;
+        .modal-header-info h2 {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+        .modal-header-info .name-en {
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        .modal-header-info .brand {
+            color: #e94560;
+            font-size: 13px;
+        }
+        .modal-body {
+            padding: 25px;
+        }
+        .modal-description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+        .price-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .price-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .price-item:hover {
+            transform: translateY(-3px);
+        }
+        .price-item .platform {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1a1a2e;
+        }
+        .price-item .price-value {
+            font-size: 22px;
+            font-weight: bold;
+            color: #e94560;
+            margin-bottom: 6px;
+        }
+        .price-item .price-original {
+            font-size: 12px;
+            color: #999;
+            text-decoration: line-through;
             margin-bottom: 10px;
         }
-
-        .game-info p {
-            margin-bottom: 5px;
+        .price-item .buy-btn {
+            display: inline-block;
+            padding: 6px 16px;
+            background: #0f3460;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: all 0.3s;
         }
-
-        .compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .price-item .buy-btn:hover {
+            background: #16213e;
+            transform: scale(1.05);
         }
-
-        .compare-table th, .compare-table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .compare-table th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-        }
-
-        .platform-logo {
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .steam { color: #1B2838; }
-        .epic { color: #2A2A2A; }
-        .steampy { color: #FF6B6B; }
-        .steamcici { color: #4ECDC4; }
-
-        .price {
-            font-size: 20px;
-            font-weight: bold;
-            color: #E53935;
-        }
-
-        .performance-section {
-            margin-top: 30px;
-        }
-
-        .performance-section h3 {
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
-
         .specs-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
         }
-
         .spec-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 4px;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
         }
-
-        .spec-label { font-weight: bold; }
-        .spec-value { color: #666; }
-
+        .spec-item .spec-label {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .spec-item .spec-value {
+            font-size: 13px;
+            font-weight: bold;
+            color: #1a1a2e;
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 35px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+        .close-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg);
+        }
         .no-results {
             text-align: center;
-            padding: 50px;
-            color: #666;
-        }
-
-        .section-title {
-            font-size: 14px;
+            padding: 50px 20px;
+            font-size: 16px;
             color: #999;
-            text-align: center;
-            margin-bottom: 10px;
+            grid-column: 1 / -1;
+        }
+        .stats-bar {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stats-bar p {
+            color: #666;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>3A游戏价格对比</h1>
-        <p>实时对比Steam、EPIC、SteamPY、SteamCICI四大平台价格</p>
+        <h1>🎮 3A游戏价格对比</h1>
+        <div class="refresh-container">
+            <span id="lastRefresh">价格数据更新于: --</span>
+            <button id="refreshBtn" onclick="refreshPrices()">
+                <span>🔄</span>
+                <span>刷新价格</span>
+            </button>
+        </div>
     </div>
 
     <div class="search-wrapper">
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="输入游戏名称搜索..." autocomplete="off">
+            <input type="text" id="searchInput" placeholder="输入游戏名称搜索 (支持中英文)..." autocomplete="off">
             <button id="searchBtn">搜索</button>
         </div>
         <div class="suggestions" id="suggestions"></div>
     </div>
 
-    <div class="games-container">
-        <p class="section-title">所有3A游戏（共<span id="totalCount">0</span>款）</p>
-        <div class="games-grid" id="gamesGrid"></div>
+    <div class="stats-bar">
+        <p id="totalCount">共收录 -- 款游戏</p>
     </div>
 
-    <div class="compare-modal" id="compareModal">
-        <div class="compare-content">
-            <span class="close-btn" id="closeBtn">&times;</span>
-            <div class="game-detail-header">
-                <img id="modalGameImage" src="" alt="游戏封面">
-                <div class="game-info">
+    <div class="game-grid" id="gamesGrid"></div>
+
+    <div class="modal" id="compareModal">
+        <span class="close-btn" id="closeBtn">&times;</span>
+        <div class="modal-content">
+            <div class="modal-header">
+                <img id="modalGameImage" src="" alt="">
+                <div class="modal-header-info">
                     <h2 id="modalGameName"></h2>
-                    <p id="modalGameBrand"></p>
-                    <p id="modalGameDesc"></p>
+                    <p class="name-en" id="modalGameNameEn"></p>
+                    <p class="brand" id="modalGameBrand"></p>
                 </div>
             </div>
-
-            <div class="performance-section">
-                <h3>游戏信息</h3>
+            <div class="modal-body">
+                <p class="modal-description" id="modalGameDesc"></p>
+                
+                <h3 style="margin-bottom: 12px; color: #1a1a2e; font-size: 16px;">💰 各平台价格对比</h3>
+                <div class="price-comparison" id="priceComparison"></div>
+                
+                <h3 style="margin: 25px 0 12px; color: #1a1a2e; font-size: 16px;">📋 游戏详情</h3>
                 <div class="specs-grid" id="specsGrid"></div>
             </div>
-
-            <table class="compare-table">
-                <thead>
-                    <tr>
-                        <th>平台</th>
-                        <th>价格</th>
-                        <th>链接</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="platform-logo steam">Steam</span></td>
-                        <td class="price" id="priceSteam"></td>
-                        <td><a href="#" id="linkSteam" target="_blank">查看详情</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="platform-logo epic">EPIC</span></td>
-                        <td class="price" id="priceEpic"></td>
-                        <td><a href="#" id="linkEpic" target="_blank">查看详情</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="platform-logo steampy">SteamPY</span></td>
-                        <td class="price" id="priceSteamPY"></td>
-                        <td><a href="#" id="linkSteamPY" target="_blank">查看详情</a></td>
-                    </tr>
-                    <tr>
-                        <td><span class="platform-logo steamcici">SteamCICI</span></td>
-                        <td class="price" id="priceSteamCICI"></td>
-                        <td><a href="#" id="linkSteamCICI" target="_blank">查看详情</a></td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 
     <script>
         const games = [
-            { id: 1, name: "黑神话：悟空", brand: "游戏科学", description: "国产3A动作RPG，西游题材", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2024年8月20日", size: "128GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "201", steamLink: "https://store.steampowered.com/app/2358720", epic: "268", epicLink: "https://store.epicgames.com/store/pdua/black-myth-wukong", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 2, name: "艾尔登法环", brand: "FromSoftware", description: "宫崎英高出品，开放世界动作RPG", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2022年2月25日", size: "50GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1245620", epic: "暂无", epicLink: "https://store.epicgames.com", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 3, name: "赛博朋克2077", brand: "CD Projekt RED", description: "开放世界RPG，夜之城冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/library_600x900.jpg", specs: { genre: "开放世界RPG", releaseDate: "2020年12月10日", size: "70GB", language: "简体中文", players: "单人", rating: "多半好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1091500", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/cyberpunk-2077", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 4, name: "霍格沃茨之遗", brand: "Avalanche Software", description: "哈利波特世界观，开放世界动作RPG", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/990080/library_600x900.jpg", specs: { genre: "开放世界RPG", releaseDate: "2023年2月10日", size: "85GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/990080", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/hogwarts-legacy", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 5, name: "荒野大镖客2", brand: "Rockstar Games", description: "西部题材开放世界，R星出品", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg", specs: { genre: "开放世界", releaseDate: "2019年11月5日", size: "120GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "279", steamLink: "https://store.steampowered.com/app/1174180", epic: "279", epicLink: "https://store.epicgames.com/store/pdua/red-dead-redemption-2", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 6, name: "巫师3：狂猎", brand: "CD Projekt RED", description: "波兰蠢驴出品，开放世界RPG", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/library_600x900.jpg", specs: { genre: "开放世界RPG", releaseDate: "2015年5月19日", size: "40GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "127", steamLink: "https://store.steampowered.com/app/292030", epic: "127", epicLink: "https://store.epicgames.com/store/pdua/the-witcher-3-wild-hunt", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 7, name: " GTA5", brand: "Rockstar Games", description: "犯罪主题开放世界，经典神作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg", specs: { genre: "开放世界", releaseDate: "2015年4月14日", size: "95GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "119", steamLink: "https://store.steampowered.com/app/271590", epic: "119", epicLink: "https://store.epicgames.com/store/pdua/grand-theft-auto-v", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 8, name: "对马岛之魂", brand: "Sucker Punch", description: "蒙古入侵时期日本，开放世界动作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2215430/library_600x900.jpg", specs: { genre: "开放世界动作", releaseDate: "2024年5月16日", size: "60GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "248", steamLink: "https://store.steampowered.com/app/2215430", epic: "248", epicLink: "https://store.epicgames.com/store/pdua/ghost-of-tsushima", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 9, name: "只狼：影逝二度", brand: "FromSoftware", description: "宫崎英高出品，刀剑动作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/814380/library_600x900.jpg", specs: { genre: "动作", releaseDate: "2019年3月22日", size: "25GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "198", steamLink: "https://store.steampowered.com/app/814380", epic: "暂无", epicLink: "https://store.epicgames.com", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 10, name: "死亡空间", brand: "Motive Studio", description: "科幻恐怖生存，经典重制版", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1540320/library_600x900.jpg", specs: { genre: "恐怖生存", releaseDate: "2023年1月27日", size: "60GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "248", steamLink: "https://store.steampowered.com/app/1540320", epic: "248", epicLink: "https://store.epicgames.com/store/pdua/dead-space", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 11, name: "生化危机4重制版", brand: "Capcom", description: "经典恐怖生存，动作冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2050650/library_600x900.jpg", specs: { genre: "恐怖生存", releaseDate: "2023年3月24日", size: "67GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "348", steamLink: "https://store.steampowered.com/app/2050650", epic: "348", epicLink: "https://store.epicgames.com/store/pdua/resident-evil-4", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 12, name: "地平线5", brand: "PlayStation Studios", description: "墨西哥开放世界，驾车冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2420110/library_600x900.jpg", specs: { genre: "开放世界赛车", releaseDate: "2024年3月21日", size: "123GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "398", steamLink: "https://store.steampowered.com/app/2420110", epic: "398", epicLink: "https://store.epicgames.com/store/pdua/horizon-forbidden-west", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 13, name: "刺客信条：幻景", brand: "Ubisoft", description: "巴格达背景，刺客信条新作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3035570/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2024年10月17日", size: "65GB", language: "简体中文", players: "单人", rating: "多半好评" }, prices: { steam: "248", steamLink: "https://store.steampowered.com/app/3035570", epic: "248", epicLink: "https://store.epicgames.com/store/pdua/assassins-creed-mirage", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 14, name: "星空", brand: "Bethesda", description: " Bethesda出品，太空开放世界RPG", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1716740/library_600x900.jpg", specs: { genre: "开放世界RPG", releaseDate: "2023年9月1日", size: "125GB", language: "简体中文", players: "单人", rating: "多半好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1716740", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/starfield", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 15, name: "卧龙：苍天陨落", brand: "Team Ninja", description: "三国背景，动作魂类游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1448440/library_600x900.jpg", specs: { genre: "动作", releaseDate: "2023年3月3日", size: "60GB", language: "简体中文", players: "单人", rating: "多半好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1448440", epic: "暂无", epicLink: "https://store.epicgames.com", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 16, name: "仁王2", brand: "Team Ninja", description: "日本战国背景，类魂动作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1325200/library_600x900.jpg", specs: { genre: "动作", releaseDate: "2021年2月5日", size: "50GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "249", steamLink: "https://store.steampowered.com/app/1325200", epic: "暂无", epicLink: "https://store.epicgames.com", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 17, name: "战神5", brand: "Santa Monica Studio", description: "北欧神话，奎托斯父子冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2322010/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2024年9月19日", size: "90GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "398", steamLink: "https://store.steampowered.com/app/2322010", epic: "暂无", epicLink: "https://store.epicgames.com", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 18, name: "最终幻想16", brand: "Square Enix", description: "日式RPG，召唤兽战斗", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2515020/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2023年6月22日", size: "95GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/2515020", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/final-fantasy-xvi", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 19, name: "龙之信条2", brand: "Capcom", description: "开放世界动作RPG，幻想题材", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2054970/library_600x900.jpg", specs: { genre: "开放世界RPG", releaseDate: "2024年3月22日", size: "80GB", language: "简体中文", players: "单人", rating: "多半好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/2054970", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/dragmons-dragon-2", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 20, name: "怪物猎人：荒野", brand: "Capcom", description: "狩猎动作游戏，最新大作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2246340/library_600x900.jpg", specs: { genre: "动作狩猎", releaseDate: "2025年2月28日", size: "140GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "488", steamLink: "https://store.steampowered.com/app/2246340", epic: "488", epicLink: "https://store.epicgames.com/store/pdua/monster-hunter-wilds", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 21, name: "博德之门3", brand: "Larian Studios", description: "CRPG神作，龙与地下城", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1086940/library_600x900.jpg", specs: { genre: "CRPG", releaseDate: "2023年8月3日", size: "122GB", language: "简体中文", players: "单人/多人", rating: "好评如潮" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1086940", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/baldurs-gate-3", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 22, name: "塞尔达传说：王国之泪", brand: "Nintendo", description: "Switch独占，开放世界冒险", image: "https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?w=400&h=300&fit=crop", specs: { genre: "开放世界冒险", releaseDate: "2023年5月12日", size: "18GB", language: "多语言", players: "单人", rating: "好评如潮" }, prices: { steam: "暂无", steamLink: "https://www.nintendo.com", epic: "暂无", epicLink: "https://www.nintendo.com", steampy: "暂无", steampyLink: "https://steampy.com", steamcici: "暂无", steamciciLink: "https://steamcici.com" } },
-            { id: 23, name: "漫威蜘蛛侠2", brand: "Insomniac Games", description: "漫威IP，纽约飞檐走壁", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2651280/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2023年10月20日", size: "90GB", language: "多语言", players: "单人", rating: "好评如潮" }, prices: { steam: "348", steamLink: "https://store.steampowered.com/app/2651280", epic: "348", epicLink: "https://store.epicgames.com/store/pdua/marvels-spider-man-2", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-
-            { id: 25, name: "使命召唤：现代战争3", brand: "Activision", description: "FPS射击大作，战争题材", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2519060/library_600x900.jpg", specs: { genre: "FPS射击", releaseDate: "2023年11月10日", size: "140GB", language: "简体中文", players: "单人/多人", rating: "多半好评" }, prices: { steam: "446", steamLink: "https://store.steampowered.com/app/2519060", epic: "446", epicLink: "https://store.epicgames.com/store/pdua/call-of-duty-modern-warfare-iii", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 26, name: "战地2042", brand: "EA DICE", description: "EA射击游戏，未来战争", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1517290/library_600x900.jpg", specs: { genre: "FPS射击", releaseDate: "2021年6月13日", size: "100GB", language: "简体中文", players: "多人", rating: "多半差评" }, prices: { steam: "248", steamLink: "https://store.steampowered.com/app/1517290", epic: "248", epicLink: "https://store.epicgames.com/store/pdua/battlefield-2042", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 27, name: "EA Sports FC 24", brand: "EA Sports", description: "足球模拟游戏，体育大作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2195250/library_600x900.jpg", specs: { genre: "体育模拟", releaseDate: "2023年9月27日", size: "100GB", language: "多语言", players: "单人/多人", rating: "多半好评" }, prices: { steam: "398", steamLink: "https://store.steampowered.com/app/2195250", epic: "398", epicLink: "https://store.epicgames.com/store/pdua/ea-sports-fc-24", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 28, name: "NBA 2K24", brand: "2K Sports", description: "篮球模拟游戏，体育大作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2389600/library_600x900.jpg", specs: { genre: "体育模拟", releaseDate: "2023年9月8日", size: "150GB", language: "多语言", players: "单人/多人", rating: "多半好评" }, prices: { steam: "299", steamLink: "https://store.steampowered.com/app/2389600", epic: "299", epicLink: "https://store.epicgames.com/store/pdua/nba-2k24", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 29, name: "消逝的光芒2", brand: "Techland", description: "跑酷生存恐怖，开放世界", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/534380/library_600x900.jpg", specs: { genre: "开放世界生存", releaseDate: "2022年2月4日", size: "60GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/534380", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/dying-light-2-stay-human", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 30, name: "孤岛惊魂6", brand: "Ubisoft", description: "开放世界射击，岛国冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1546070/library_600x900.jpg", specs: { genre: "开放世界射击", releaseDate: "2021年10月7日", size: "70GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1546070", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/far-cry-6", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 31, name: "幽灵线：东京", brand: "Tango Gameworks", description: "三上真司出品，东京怪谈", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1547290/library_600x900.jpg", specs: { genre: "动作恐怖", releaseDate: "2022年3月25日", size: "36GB", language: "简体中文", players: "单人", rating: "多半好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1547290", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/ghostwire-tokyo", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 32, name: "死亡循环", brand: "Arkane Studios", description: "时间循环射击，双子杀手", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1252330/library_600x900.jpg", specs: { genre: "动作射击", releaseDate: "2021年9月14日", size: "30GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "199", steamLink: "https://store.steampowered.com/app/1252330", epic: "199", epicLink: "https://store.epicgames.com/store/pdua/deathloop", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 33, name: "蔑视", brand: "EKO Software", description: "恐怖射击，抽象艺术风格", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1849900/library_600x900.jpg", specs: { genre: "恐怖射击", releaseDate: "2022年10月21日", size: "50GB", language: "多语言", players: "单人", rating: "多半好评" }, prices: { steam: "148", steamLink: "https://store.steampowered.com/app/1849900", epic: "148", epicLink: "https://store.epicgames.com/store/pdua/scorn", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 34, name: "瘟疫传说：安魂曲", brand: "Asobo Studio", description: "中世纪冒险，鼠疫题材", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1850570/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2022年10月6日", size: "45GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "248", steamLink: "https://store.steampowered.com/app/1850570", epic: "248", epicLink: "https://store.epicgames.com/store/pdua/a-plague-tale-requiem", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 35, name: "木卫四协议", brand: "Striking Distance Studios", description: "科幻恐怖，密闭空间逃生", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1195380/library_600x900.jpg", specs: { genre: "恐怖生存", releaseDate: "2022年12月2日", size: "70GB", language: "简体中文", players: "单人", rating: "多半好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1195380", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/the-callisto-protocol", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 36, name: "Atomic Heart", brand: "Mundfish", description: "苏联风格科幻，射击冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1213320/library_600x900.jpg", specs: { genre: "动作射击", releaseDate: "2023年2月21日", size: "90GB", language: "简体中文", players: "单人", rating: "多半好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1213320", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/atomic-heart", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 37, name: "堕落之主", brand: "Hexworks", description: "黑暗之魂类，黑暗奇幻", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1515493/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2023年10月13日", size: "70GB", language: "简体中文", players: "单人/多人", rating: "多半好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1515493", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/lords-of-the-fallen", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 38, name: "匹诺曹的谎言", brand: "Neowiz", description: "魂类动作，黑暗童话风格", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1057240/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2023年8月17日", size: "45GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1057240", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/liars-pyramid", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 39, name: "装甲核心6", brand: "FromSoftware", description: "机战动作，宫崎英高新作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1888930/library_600x900.jpg", specs: { genre: "动作", releaseDate: "2023年8月25日", size: "60GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/1888930", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/armored-core-vi", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 40, name: "最终幻想7：重生", brand: "Square Enix", description: "FF7重制版第二章", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2378700/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2024年2月29日", size: "150GB", language: "多语言", players: "单人", rating: "好评如潮" }, prices: { steam: "448", steamLink: "https://store.steampowered.com/app/2378700", epic: "448", epicLink: "https://store.epicgames.com/store/pdua/final-fantasy-vii-rebirth", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 41, name: "真女神转生5", brand: "Atlus", description: "日式RPG，恶魔召唤", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1515050/library_600x900.jpg", specs: { genre: "RPG", releaseDate: "2021年11月11日", size: "40GB", language: "多语言", players: "单人", rating: "特别好评" }, prices: { steam: "379", steamLink: "https://store.steampowered.com/app/1515050", epic: "暂无", epicLink: "https://store.epicgames.com", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 42, name: "女神异闻录5皇家版", brand: "Atlus", description: "日式学园RPG，潮到爆", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1686550/library_600x900.jpg", specs: { genre: "RPG", releaseDate: "2022年10月21日", size: "50GB", language: "多语言", players: "单人", rating: "好评如潮" }, prices: { steam: "359", steamLink: "https://store.steampowered.com/app/1686550", epic: "暂无", epicLink: "https://store.epicgames.com", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 43, name: "如龙8", brand: "Ryu Ga Gotoku Studio", description: "日式RPG，桐生一马新作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358500/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2024年1月26日", size: "80GB", language: "多语言", players: "单人", rating: "特别好评" }, prices: { steam: "328", steamLink: "https://store.steampowered.com/app/2358500", epic: "328", epicLink: "https://store.epicgames.com/store/pdua/like-a-dragon-infinite-wealth", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 44, name: "死亡之夜", brand: "Pixel_tail Games", description: "塔防射击，肉鸽元素", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1123350/library_600x900.jpg", specs: { genre: "塔防射击", releaseDate: "2022年10月25日", size: "5GB", language: "多语言", players: "单人/多人", rating: "特别好评" }, prices: { steam: "68", steamLink: "https://store.steampowered.com/app/1123350", epic: "68", epicLink: "https://store.epicgames.com/store/pdua/nightdeath", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 45, name: "幻兽帕鲁", brand: "Pocketpair", description: "开放世界生存建造，缝合怪", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/library_600x900.jpg", specs: { genre: "开放世界生存", releaseDate: "2024年1月19日", size: "40GB", language: "多语言", players: "单人/多人", rating: "特别好评" }, prices: { steam: "108", steamLink: "https://store.steampowered.com/app/1623730", epic: "108", epicLink: "https://store.epicgames.com/store/pdua/palworld", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 46, name: "飙酷车神2", brand: "Ivory Tower", description: "开放世界赛车，海陆空", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/385160/library_600x900.jpg", specs: { genre: "开放世界赛车", releaseDate: "2018年6月29日", size: "65GB", language: "多语言", players: "单人/多人", rating: "多半好评" }, prices: { steam: "168", steamLink: "https://store.steampowered.com/app/385160", epic: "168", epicLink: "https://store.epicgames.com/store/pdua/the-crew-2", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 47, name: "极限竞速：地平线4", brand: "Playground Games", description: "英国开放世界，赛车", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1248060/library_600x900.jpg", specs: { genre: "开放世界赛车", releaseDate: "2021年10月5日", size: "110GB", language: "多语言", players: "单人/多人", rating: "好评如潮" }, prices: { steam: "238", steamLink: "https://store.steampowered.com/app/1248060", epic: "238", epicLink: "https://store.epicgames.com/store/pdua/forza-horizon-4", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 48, name: "飙酷车神3", brand: "Ivory Tower", description: "开放世界赛车，墨西哥", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1088190/library_600x900.jpg", specs: { genre: "开放世界赛车", releaseDate: "2020年6月13日", size: "70GB", language: "多语言", players: "单人/多人", rating: "多半好评" }, prices: { steam: "188", steamLink: "https://store.steampowered.com/app/1088190", epic: "188", epicLink: "https://store.epicgames.com/store/pdua/the-crew-3", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 49, name: "古墓丽影：暗影", brand: "Eidos-Montral", description: "劳拉重启三部曲最终章", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/585450/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2018年9月14日", size: "40GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "298", steamLink: "https://store.steampowered.com/app/585450", epic: "298", epicLink: "https://store.epicgames.com/store/pdua/shadow-of-the-tomb-raider", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } },
-            { id: 50, name: "控制", brand: "Remedy Entertainment", description: "超自然射击，调查局冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/870780/library_600x900.jpg", specs: { genre: "动作射击", releaseDate: "2019年8月27日", size: "45GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "199", steamLink: "https://store.steampowered.com/app/870780", epic: "199", epicLink: "https://store.epicgames.com/store/pdua/control", steampy: "实时查询", steampyLink: "https://steampy.com", steamcici: "实时查询", steamciciLink: "https://steamcici.com" } }
+            { id: 1, name: "黑神话：悟空", nameEn: "Black Myth: Wukong", brand: "Game Science", description: "国产3A动作角色扮演游戏，以《西游记》为灵感改编", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2024年8月20日", size: "130GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "268", steamOriginal: "298", steamLink: "https://store.steampowered.com/app/2358720", epic: "268", epicOriginal: "298", epicLink: "https://store.epicgames.com/zh-CN/p/black-myth-wukong", steampy: "200", steampyOriginal: "248", steampyLink: "https://steampy.com", steamcici: "198", steamciciOriginal: "238", steamciciLink: "https://steamcici.com" } },
+            { id: 2, name: "艾尔登法环", nameEn: "Elden Ring", brand: "FromSoftware", description: "宫崎英高×乔治·R·R·马丁共同打造的奇幻世界动作RPG", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2022年2月25日", size: "60GB", language: "简体中文", players: "单人/多人", rating: "好评如潮" }, prices: { steam: "148", steamOriginal: "298", steamLink: "https://store.steampowered.com/app/1245620", epic: "暂无", epicOriginal: "-", epicLink: "https://store.epicgames.com", steampy: "120", steampyOriginal: "238", steampyLink: "https://steampy.com", steamcici: "115", steamciciOriginal: "228", steamciciLink: "https://steamcici.com" } },
+            { id: 3, name: "赛博朋克2077", nameEn: "Cyberpunk 2077", brand: "CD Projekt RED", description: "夜之城的开放世界动作冒险游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/library_600x900.jpg", specs: { genre: "开放世界RPG", releaseDate: "2020年12月10日", size: "100GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "99", steamOriginal: "198", steamLink: "https://store.steampowered.com/app/1091500", epic: "99", epicOriginal: "198", epicLink: "https://store.epicgames.com/zh-CN/p/cyberpunk-2077", steampy: "80", steampyOriginal: "188", steampyLink: "https://steampy.com", steamcici: "78", steamciciOriginal: "178", steamciciLink: "https://steamcici.com" } },
+            { id: 4, name: "霍格沃茨之遗", nameEn: "Hogwarts Legacy", brand: "Portkey Games", description: "哈利波特世界观开放世界动作角色扮演游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/990080/library_600x900.jpg", specs: { genre: "开放世界RPG", releaseDate: "2023年2月10日", size: "85GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "124", steamOriginal: "198", steamLink: "https://store.steampowered.com/app/990080", epic: "124", epicOriginal: "198", epicLink: "https://store.epicgames.com/zh-CN/p/hogwarts-legacy", steampy: "99", steampyOriginal: "188", steampyLink: "https://steampy.com", steamcici: "95", steamciciOriginal: "178", steamciciLink: "https://steamcici.com" } },
+            { id: 5, name: "荒野大镖客2", nameEn: "Red Dead Redemption 2", brand: "Rockstar Games", description: "美国西部的史诗冒险故事", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg", specs: { genre: "开放世界", releaseDate: "2019年12月5日", size: "120GB", language: "简体中文", players: "单人/多人", rating: "好评如潮" }, prices: { steam: "69", steamOriginal: "139", steamLink: "https://store.steampowered.com/app/1174180", epic: "69", epicOriginal: "139", epicLink: "https://store.epicgames.com/zh-CN/p/red-dead-redemption-2", steampy: "55", steampyOriginal: "129", steampyLink: "https://steampy.com", steamcici: "52", steamciciOriginal: "119", steamciciLink: "https://steamcici.com" } },
+            { id: 6, name: "巫师3：狂猎", nameEn: "The Witcher 3: Wild Hunt", brand: "CD Projekt RED", description: "波兰蠢驴出品的史诗级开放世界RPG", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/library_600x900.jpg", specs: { genre: "开放世界RPG", releaseDate: "2015年5月19日", size: "50GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "25", steamOriginal: "79", steamLink: "https://store.steampowered.com/app/292030", epic: "25", epicOriginal: "79", epicLink: "https://store.epicgames.com/zh-CN/p/the-witcher-3-wild-hunt", steampy: "20", steampyOriginal: "69", steampyLink: "https://steampy.com", steamcici: "18", steamciciOriginal: "59", steamciciLink: "https://steamcici.com" } },
+            { id: 7, name: "GTA5", nameEn: "Grand Theft Auto V", brand: "Rockstar Games", description: "犯罪主题开放世界，史上最畅销游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg", specs: { genre: "开放世界", releaseDate: "2015年4月14日", size: "120GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "59", steamOriginal: "119", steamLink: "https://store.steampowered.com/app/271590", epic: "59", epicOriginal: "119", epicLink: "https://store.epicgames.com/zh-CN/p/grand-theft-auto-v", steampy: "45", steampyOriginal: "99", steampyLink: "https://steampy.com", steamcici: "42", steamciciOriginal: "89", steamciciLink: "https://steamcici.com" } },
+            { id: 8, name: "对马岛之魂", nameEn: "Ghost of Tsushima", brand: "Sucker Punch", description: "日本武士题材的开放世界动作冒险游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2215430/library_600x900.jpg", specs: { genre: "开放世界动作", releaseDate: "2024年5月16日", size: "70GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "248", steamOriginal: "298", steamLink: "https://store.steampowered.com/app/2215430", epic: "暂无", epicOriginal: "-", epicLink: "https://store.epicgames.com", steampy: "198", steampyOriginal: "288", steampyLink: "https://steampy.com", steamcici: "188", steamciciOriginal: "278", steamciciLink: "https://steamcici.com" } },
+            { id: 9, name: "只狼：影逝二度", nameEn: "Sekiro: Shadows Die Twice", brand: "FromSoftware", description: "宫崎英高出品的武士动作游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/814380/library_600x900.jpg", specs: { genre: "动作", releaseDate: "2019年3月22日", size: "20GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "99", steamOriginal: "198", steamLink: "https://store.steampowered.com/app/814380", epic: "暂无", epicOriginal: "-", epicLink: "https://store.epicgames.com", steampy: "75", steampyOriginal: "178", steampyLink: "https://steampy.com", steamcici: "70", steamciciOriginal: "168", steamciciLink: "https://steamcici.com" } },
+            { id: 10, name: "死亡空间重制版", nameEn: "Dead Space", brand: "Motive Studio", description: "科幻恐怖生存经典重制", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1693980/library_600x900.jpg", specs: { genre: "恐怖生存", releaseDate: "2023年1月27日", size: "50GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "99", steamOriginal: "149", steamLink: "https://store.steampowered.com/app/1693980", epic: "99", epicOriginal: "149", epicLink: "https://store.epicgames.com/zh-CN/p/dead-space", steampy: "79", steampyOriginal: "139", steampyLink: "https://steampy.com", steamcici: "75", steamciciOriginal: "129", steamciciLink: "https://steamcici.com" } },
+            { id: 11, name: "生化危机4 重制版", nameEn: "Resident Evil 4", brand: "Capcom", description: "经典恐怖生存动作游戏重制版", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2050650/library_600x900.jpg", specs: { genre: "恐怖生存", releaseDate: "2023年3月24日", size: "60GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "128", steamOriginal: "174", steamLink: "https://store.steampowered.com/app/2050650", epic: "128", epicOriginal: "174", epicLink: "https://store.epicgames.com/zh-CN/p/resident-evil-4", steampy: "99", steampyOriginal: "164", steampyLink: "https://steampy.com", steamcici: "95", steamciciOriginal: "154", steamciciLink: "https://steamcici.com" } },
+            { id: 12, name: "地平线：西之绝境", nameEn: "Horizon Forbidden West", brand: "Guerrilla Games", description: "机械恐龙世界的开放世界冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2420110/library_600x900.jpg", specs: { genre: "开放世界冒险", releaseDate: "2024年3月21日", size: "150GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "348", steamOriginal: "398", steamLink: "https://store.steampowered.com/app/2420110", epic: "暂无", epicOriginal: "-", epicLink: "https://store.epicgames.com", steampy: "298", steampyOriginal: "388", steampyLink: "https://steampy.com", steamcici: "288", steamciciOriginal: "378", steamciciLink: "https://steamcici.com" } },
+            { id: 13, name: "刺客信条：幻景", nameEn: "Assassin's Creed Mirage", brand: "Ubisoft", description: "巴格达刺客冒险故事", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2361390/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2023年10月5日", size: "50GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "99", steamOriginal: "198", steamLink: "https://store.steampowered.com/app/2361390", epic: "99", epicOriginal: "198", epicLink: "https://store.epicgames.com/zh-CN/p/assassins-creed-mirage", steampy: "79", steampyOriginal: "188", steampyLink: "https://steampy.com", steamcici: "75", steamciciOriginal: "178", steamciciLink: "https://steamcici.com" } },
+            { id: 14, name: "星空", nameEn: "Starfield", brand: "Bethesda", description: "Bethesda首款太空RPG巨作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1716740/library_600x900.jpg", specs: { genre: "开放世界RPG", releaseDate: "2023年9月6日", size: "125GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "148", steamOriginal: "248", steamLink: "https://store.steampowered.com/app/1716740", epic: "148", epicOriginal: "248", epicLink: "https://store.epicgames.com/zh-CN/p/starfield", steampy: "118", steampyOriginal: "238", steampyLink: "https://steampy.com", steamcici: "110", steamciciOriginal: "228", steamciciLink: "https://steamcici.com" } },
+            { id: 15, name: "卧龙：苍天陨落", nameEn: "Wo Long: Fallen Dynasty", brand: "Team Ninja", description: "三国背景的动作魂类游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1448440/library_600x900.jpg", specs: { genre: "动作", releaseDate: "2023年3月3日", size: "50GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "124", steamOriginal: "248", steamLink: "https://store.steampowered.com/app/1448440", epic: "暂无", epicOriginal: "-", epicLink: "https://store.epicgames.com", steampy: "99", steampyOriginal: "238", steampyLink: "https://steampy.com", steamcici: "95", steamciciOriginal: "228", steamciciLink: "https://steamcici.com" } },
+            { id: 16, name: "仁王2", nameEn: "Nioh 2", brand: "Team Ninja", description: "日本战国时期的类魂动作游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/844870/library_600x900.jpg", specs: { genre: "动作", releaseDate: "2021年2月5日", size: "85GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "99", steamOriginal: "199", steamLink: "https://store.steampowered.com/app/844870", epic: "暂无", epicOriginal: "-", epicLink: "https://store.epicgames.com", steampy: "79", steampyOriginal: "189", steampyLink: "https://steampy.com", steamcici: "75", steamciciOriginal: "179", steamciciLink: "https://steamcici.com" } },
+            { id: 17, name: "战神", nameEn: "God of War", brand: "Santa Monica Studio", description: "奎托斯北欧神话全新冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1593500/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2022年1月14日", size: "70GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "139", steamOriginal: "279", steamLink: "https://store.steampowered.com/app/1593500", epic: "暂无", epicOriginal: "-", epicLink: "https://store.epicgames.com", steampy: "109", steampyOriginal: "269", steampyLink: "https://steampy.com", steamcici: "105", steamciciOriginal: "259", steamciciLink: "https://steamcici.com" } },
+            { id: 18, name: "最终幻想16", nameEn: "Final Fantasy XVI", brand: "Square Enix", description: "日式RPG系列最新作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2515020/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2024年9月17日", size: "110GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "223", steamOriginal: "298", steamLink: "https://store.steampowered.com/app/2515020", epic: "223", epicOriginal: "298", epicLink: "https://store.epicgames.com/zh-CN/p/final-fantasy-xvi", steampy: "179", steampyOriginal: "288", steampyLink: "https://steampy.com", steamcici: "175", steamciciOriginal: "278", steamciciLink: "https://steamcici.com" } },
+            { id: 19, name: "龙之信条2", nameEn: "Dragon's Dogma 2", brand: "Capcom", description: "开放世界动作RPG幻想大作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2054970/library_600x900.jpg", specs: { genre: "开放世界RPG", releaseDate: "2024年3月22日", size: "80GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "223", steamOriginal: "298", steamLink: "https://store.steampowered.com/app/2054970", epic: "223", epicOriginal: "298", epicLink: "https://store.epicgames.com/zh-CN/p/dragons-dogma-2", steampy: "179", steampyOriginal: "288", steampyLink: "https://steampy.com", steamcici: "175", steamciciOriginal: "278", steamciciLink: "https://steamcici.com" } },
+            { id: 20, name: "怪物猎人：荒野", nameEn: "Monster Hunter Wilds", brand: "Capcom", description: "怪物猎人系列全新狩猎冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2246340/library_600x900.jpg", specs: { genre: "动作狩猎", releaseDate: "2025年2月28日", size: "75GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "348", steamOriginal: "348", steamLink: "https://store.steampowered.com/app/2246340", epic: "348", epicOriginal: "348", epicLink: "https://store.epicgames.com/zh-CN/p/monster-hunter-wilds", steampy: "298", steampyOriginal: "338", steampyLink: "https://steampy.com", steamcici: "288", steamciciOriginal: "328", steamciciLink: "https://steamcici.com" } },
+            { id: 21, name: "博德之门3", nameEn: "Baldur's Gate 3", brand: "Larian Studios", description: "龙与地下城CRPG神作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1086940/library_600x900.jpg", specs: { genre: "CRPG", releaseDate: "2023年8月3日", size: "150GB", language: "简体中文", players: "单人/多人", rating: "好评如潮" }, prices: { steam: "198", steamOriginal: "298", steamLink: "https://store.steampowered.com/app/1086940", epic: "198", epicOriginal: "298", epicLink: "https://store.epicgames.com/zh-CN/p/baldurs-gate-3", steampy: "159", steampyOriginal: "288", steampyLink: "https://steampy.com", steamcici: "155", steamciciOriginal: "278", steamciciLink: "https://steamcici.com" } },
+            { id: 22, name: "漫威蜘蛛侠2", nameEn: "Marvel's Spider-Man 2", brand: "Insomniac Games", description: "纽约蜘蛛侠动作冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2672200/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2025年1月30日", size: "100GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "348", steamOriginal: "398", steamLink: "https://store.steampowered.com/app/2672200", epic: "348", epicOriginal: "398", epicLink: "https://store.epicgames.com/zh-CN/p/marvels-spider-man-2", steampy: "298", steampyOriginal: "388", steampyLink: "https://steampy.com", steamcici: "288", steamciciOriginal: "378", steamciciLink: "https://steamcici.com" } },
+            { id: 23, name: "使命召唤：现代战争3", nameEn: "Call of Duty: Modern Warfare III", brand: "Activision", description: "FPS射击大作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2519060/library_600x900.jpg", specs: { genre: "FPS射击", releaseDate: "2023年11月10日", size: "150GB", language: "简体中文", players: "单人/多人", rating: "多半好评" }, prices: { steam: "198", steamOriginal: "298", steamLink: "https://store.steampowered.com/app/2519060", epic: "198", epicOriginal: "298", epicLink: "https://store.epicgames.com/zh-CN/p/call-of-duty-modern-warfare-iii", steampy: "159", steampyOriginal: "288", steampyLink: "https://steampy.com", steamcici: "155", steamciciOriginal: "278", steamciciLink: "https://steamcici.com" } },
+            { id: 24, name: "战地2042", nameEn: "Battlefield 2042", brand: "EA DICE", description: "未来战争FPS射击游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1517290/library_600x900.jpg", specs: { genre: "FPS射击", releaseDate: "2021年11月19日", size: "100GB", language: "简体中文", players: "多人", rating: "特别好评" }, prices: { steam: "39", steamOriginal: "99", steamLink: "https://store.steampowered.com/app/1517290", epic: "39", epicOriginal: "99", epicLink: "https://store.epicgames.com/zh-CN/p/battlefield-2042", steampy: "29", steampyOriginal: "89", steampyLink: "https://steampy.com", steamcici: "25", steamciciOriginal: "79", steamciciLink: "https://steamcici.com" } },
+            { id: 25, name: "EA SPORTS FC 24", nameEn: "EA SPORTS FC 24", brand: "EA Sports", description: "足球模拟游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2195250/library_600x900.jpg", specs: { genre: "体育模拟", releaseDate: "2023年9月29日", size: "100GB", language: "简体中文", players: "单人/多人", rating: "多半好评" }, prices: { steam: "124", steamOriginal: "248", steamLink: "https://store.steampowered.com/app/2195250", epic: "124", epicOriginal: "248", epicLink: "https://store.epicgames.com/zh-CN/p/ea-sports-fc-24", steampy: "99", steampyOriginal: "238", steampyLink: "https://steampy.com", steamcici: "95", steamciciOriginal: "228", steamciciLink: "https://steamcici.com" } },
+            { id: 26, name: "NBA 2K24", nameEn: "NBA 2K24", brand: "2K Sports", description: "篮球模拟游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2389600/library_600x900.jpg", specs: { genre: "体育模拟", releaseDate: "2023年9月8日", size: "120GB", language: "简体中文", players: "单人/多人", rating: "多半好评" }, prices: { steam: "99", steamOriginal: "199", steamLink: "https://store.steampowered.com/app/2389600", epic: "99", epicOriginal: "199", epicLink: "https://store.epicgames.com/zh-CN/p/nba-2k24", steampy: "79", steampyOriginal: "189", steampyLink: "https://steampy.com", steamcici: "75", steamciciOriginal: "179", steamciciLink: "https://steamcici.com" } },
+            { id: 27, name: "消逝的光芒2", nameEn: "Dying Light 2 Stay Human", brand: "Techland", description: "跑酷生存恐怖开放世界", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/534380/library_600x900.jpg", specs: { genre: "开放世界生存", releaseDate: "2022年2月4日", size: "60GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "74", steamOriginal: "149", steamLink: "https://store.steampowered.com/app/534380", epic: "74", epicOriginal: "149", epicLink: "https://store.epicgames.com/zh-CN/p/dying-light-2", steampy: "59", steampyOriginal: "139", steampyLink: "https://steampy.com", steamcici: "55", steamciciOriginal: "129", steamciciLink: "https://steamcici.com" } },
+            { id: 28, name: "孤岛惊魂6", nameEn: "Far Cry 6", brand: "Ubisoft", description: "岛国开放世界射击冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2369390/library_600x900.jpg", specs: { genre: "开放世界射击", releaseDate: "2021年10月7日", size: "70GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "74", steamOriginal: "149", steamLink: "https://store.steampowered.com/app/2369390", epic: "74", epicOriginal: "149", epicLink: "https://store.epicgames.com/zh-CN/p/far-cry-6", steampy: "59", steampyOriginal: "139", steampyLink: "https://steampy.com", steamcici: "55", steamciciOriginal: "129", steamciciLink: "https://steamcici.com" } },
+            { id: 29, name: "幽灵线：东京", nameEn: "Ghostwire: Tokyo", brand: "Tango Gameworks", description: "东京超自然动作冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1475810/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2022年3月25日", size: "30GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "74", steamOriginal: "149", steamLink: "https://store.steampowered.com/app/1475810", epic: "74", epicOriginal: "149", epicLink: "https://store.epicgames.com/zh-CN/p/ghostwire-tokyo", steampy: "59", steampyOriginal: "139", steampyLink: "https://steampy.com", steamcici: "55", steamciciOriginal: "129", steamciciLink: "https://steamcici.com" } },
+            { id: 30, name: "死亡循环", nameEn: "Deathloop", brand: "Arkane Studios", description: "时间循环动作射击", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1252330/library_600x900.jpg", specs: { genre: "动作射击", releaseDate: "2021年9月14日", size: "30GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "99", steamOriginal: "199", steamLink: "https://store.steampowered.com/app/1252330", epic: "99", epicOriginal: "199", epicLink: "https://store.epicgames.com/zh-CN/p/deathloop", steampy: "79", steampyOriginal: "189", steampyLink: "https://steampy.com", steamcici: "75", steamciciOriginal: "179", steamciciLink: "https://steamcici.com" } },
+            { id: 31, name: "蔑视", nameEn: "Scorn", brand: "Ebb Software", description: "抽象恐怖射击游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/698670/library_600x900.jpg", specs: { genre: "恐怖射击", releaseDate: "2022年10月21日", size: "50GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "99", steamOriginal: "149", steamLink: "https://store.steampowered.com/app/698670", epic: "99", epicOriginal: "149", epicLink: "https://store.epicgames.com/zh-CN/p/scorn", steampy: "79", steampyOriginal: "139", steampyLink: "https://steampy.com", steamcici: "75", steamciciOriginal: "129", steamciciLink: "https://steamcici.com" } },
+            { id: 32, name: "瘟疫传说：安魂曲", nameEn: "A Plague Tale: Requiem", brand: "Asobo Studio", description: "中世纪鼠疫冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1850570/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2022年10月18日", size: "55GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "124", steamOriginal: "248", steamLink: "https://store.steampowered.com/app/1850570", epic: "124", epicOriginal: "248", epicLink: "https://store.epicgames.com/zh-CN/p/a-plague-tale-requiem", steampy: "99", steampyOriginal: "238", steampyLink: "https://steampy.com", steamcici: "95", steamciciOriginal: "228", steamciciLink: "https://steamcici.com" } },
+            { id: 33, name: "原子之心", nameEn: "Atomic Heart", brand: "Mundfish", description: "苏联科幻射击冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/668580/library_600x900.jpg", specs: { genre: "动作射击", releaseDate: "2023年2月21日", size: "90GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "99", steamOriginal: "199", steamLink: "https://store.steampowered.com/app/668580", epic: "99", epicOriginal: "199", epicLink: "https://store.epicgames.com/zh-CN/p/atomic-heart", steampy: "79", steampyOriginal: "189", steampyLink: "https://steampy.com", steamcici: "75", steamciciOriginal: "179", steamciciLink: "https://steamcici.com" } },
+            { id: 34, name: "堕落之主", nameEn: "Lords of the Fallen", brand: "Hexworks", description: "黑暗奇幻魂类游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1501750/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2023年10月13日", size: "50GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "124", steamOriginal: "248", steamLink: "https://store.steampowered.com/app/1501750", epic: "124", epicOriginal: "248", epicLink: "https://store.epicgames.com/zh-CN/p/lords-of-the-fallen", steampy: "99", steampyOriginal: "238", steampyLink: "https://steampy.com", steamcici: "95", steamciciOriginal: "228", steamciciLink: "https://steamcici.com" } },
+            { id: 35, name: "匹诺曹的谎言", nameEn: "Lies of P", brand: "Neowiz", description: "黑暗童话魂类动作游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2023年9月19日", size: "45GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "99", steamOriginal: "199", steamLink: "https://store.steampowered.com/app/1623730", epic: "99", epicOriginal: "199", epicLink: "https://store.epicgames.com/zh-CN/p/lies-of-p", steampy: "79", steampyOriginal: "189", steampyLink: "https://steampy.com", steamcici: "75", steamciciOriginal: "179", steamciciLink: "https://steamcici.com" } },
+            { id: 36, name: "装甲核心6", nameEn: "ARMORED CORE VI FIRES OF RUBICON", brand: "FromSoftware", description: "机甲动作游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1888930/library_600x900.jpg", specs: { genre: "动作", releaseDate: "2023年8月25日", size: "60GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "149", steamOriginal: "199", steamLink: "https://store.steampowered.com/app/1888930", epic: "149", epicOriginal: "199", epicLink: "https://store.epicgames.com/zh-CN/p/armored-core-vi-fires-of-rubicon", steampy: "119", steampyOriginal: "189", steampyLink: "https://steampy.com", steamcici: "115", steamciciOriginal: "179", steamciciLink: "https://steamcici.com" } },
+            { id: 37, name: "最终幻想7：重生", nameEn: "Final Fantasy VII Rebirth", brand: "Square Enix", description: "FF7重制版第二章", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2378700/library_600x900.jpg", specs: { genre: "动作RPG", releaseDate: "2025年1月30日", size: "150GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "336", steamOriginal: "448", steamLink: "https://store.steampowered.com/app/2378700", epic: "336", epicOriginal: "448", epicLink: "https://store.epicgames.com/zh-CN/p/final-fantasy-vii-rebirth", steampy: "269", steampyOriginal: "438", steampyLink: "https://steampy.com", steamcici: "259", steamciciOriginal: "428", steamciciLink: "https://steamcici.com" } },
+            { id: 38, name: "真女神转生5：复仇", nameEn: "Shin Megami Tensei V: Vengeance", brand: "Atlus", description: "日式RPG恶魔召唤", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2593780/library_600x900.jpg", specs: { genre: "RPG", releaseDate: "2024年6月14日", size: "25GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "223", steamOriginal: "298", steamLink: "https://store.steampowered.com/app/2593780", epic: "暂无", epicOriginal: "-", epicLink: "https://store.epicgames.com", steampy: "179", steampyOriginal: "288", steampyLink: "https://steampy.com", steamcici: "175", steamciciOriginal: "278", steamciciLink: "https://steamcici.com" } },
+            { id: 39, name: "女神异闻录5皇家版", nameEn: "Persona 5 Royal", brand: "Atlus", description: "日式学园RPG", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1687950/library_600x900.jpg", specs: { genre: "RPG", releaseDate: "2022年10月21日", size: "40GB", language: "简体中文", players: "单人", rating: "好评如潮" }, prices: { steam: "149", steamOriginal: "299", steamLink: "https://store.steampowered.com/app/1687950", epic: "暂无", epicOriginal: "-", epicLink: "https://store.epicgames.com", steampy: "119", steampyOriginal: "289", steampyLink: "https://steampy.com", steamcici: "115", steamciciOriginal: "279", steamciciLink: "https://steamcici.com" } },
+            { id: 40, name: "如龙8", nameEn: "Like a Dragon: Infinite Wealth", brand: "Ryu Ga Gotoku Studio", description: "日式RPG桐生一马新作", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358500/library_600x900.jpg", specs: { genre: "RPG", releaseDate: "2024年1月26日", size: "100GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "246", steamOriginal: "328", steamLink: "https://store.steampowered.com/app/2358500", epic: "246", epicOriginal: "328", epicLink: "https://store.epicgames.com/zh-CN/p/like-a-dragon-infinite-wealth", steampy: "197", steampyOriginal: "318", steampyLink: "https://steampy.com", steamcici: "188", steamciciOriginal: "308", steamciciLink: "https://steamcici.com" } },
+            { id: 41, name: "幻兽帕鲁", nameEn: "Palworld", brand: "Pocketpair", description: "开放世界生存建造", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/library_600x900.jpg", specs: { genre: "开放世界生存", releaseDate: "2024年1月19日", size: "25GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "81", steamOriginal: "108", steamLink: "https://store.steampowered.com/app/1623730", epic: "81", epicOriginal: "108", epicLink: "https://store.epicgames.com/zh-CN/p/palworld", steampy: "65", steampyOriginal: "98", steampyLink: "https://steampy.com", steamcici: "60", steamciciOriginal: "88", steamciciLink: "https://steamcici.com" } },
+            { id: 42, name: "极限竞速：地平线5", nameEn: "Forza Horizon 5", brand: "Playground Games", description: "墨西哥开放世界赛车", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/library_600x900.jpg", specs: { genre: "开放世界赛车", releaseDate: "2021年11月9日", size: "110GB", language: "简体中文", players: "单人/多人", rating: "好评如潮" }, prices: { steam: "124", steamOriginal: "248", steamLink: "https://store.steampowered.com/app/1551360", epic: "124", epicOriginal: "248", epicLink: "https://store.epicgames.com/zh-CN/p/forza-horizon-5", steampy: "99", steampyOriginal: "238", steampyLink: "https://steampy.com", steamcici: "95", steamciciOriginal: "228", steamciciLink: "https://steamcici.com" } },
+            { id: 43, name: "飙酷车神：轰鸣盛典", nameEn: "The Crew Motorfest", brand: "Ivory Tower", description: "夏威夷开放世界赛车", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2212820/library_600x900.jpg", specs: { genre: "开放世界赛车", releaseDate: "2023年9月14日", size: "80GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "124", steamOriginal: "248", steamLink: "https://store.steampowered.com/app/2212820", epic: "124", epicOriginal: "248", epicLink: "https://store.epicgames.com/zh-CN/p/the-crew-motorfest", steampy: "99", steampyOriginal: "238", steampyLink: "https://steampy.com", steamcici: "95", steamciciOriginal: "228", steamciciLink: "https://steamcici.com" } },
+            { id: 44, name: "古墓丽影：暗影", nameEn: "Shadow of the Tomb Raider", brand: "Square Enix", description: "劳拉·克劳馥的史诗冒险最终章", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/750920/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2018年9月14日", size: "60GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "49", steamOriginal: "198", steamLink: "https://store.steampowered.com/app/750920", epic: "49", epicOriginal: "198", epicLink: "https://store.epicgames.com/zh-CN/p/shadow-of-the-tomb-raider", steampy: "39", steampyOriginal: "178", steampyLink: "https://steampy.com", steamcici: "35", steamciciOriginal: "168", steamciciLink: "https://steamcici.com" } },
+            { id: 45, name: "全境封锁2", nameEn: "Tom Clancy's The Division 2", brand: "Ubisoft", description: "华盛顿特区的开放世界射击RPG", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/365590/library_600x900.jpg", specs: { genre: "开放世界射击", releaseDate: "2019年3月15日", size: "90GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "39", steamOriginal: "148", steamLink: "https://store.steampowered.com/app/365590", epic: "39", epicOriginal: "148", epicLink: "https://store.epicgames.com/zh-CN/p/tom-clancys-the-division-2", steampy: "29", steampyOriginal: "128", steampyLink: "https://steampy.com", steamcici: "25", steamciciOriginal: "118", steamciciLink: "https://steamcici.com" } },
+            { id: 46, name: "无主之地3", nameEn: "Borderlands 3", brand: "Gearbox Software", description: "疯狂的第一人称射击RPG", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/397540/library_600x900.jpg", specs: { genre: "第一人称射击", releaseDate: "2019年9月13日", size: "75GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "49", steamOriginal: "199", steamLink: "https://store.steampowered.com/app/397540", epic: "49", epicOriginal: "199", epicLink: "https://store.epicgames.com/zh-CN/p/borderlands-3", steampy: "39", steampyOriginal: "179", steampyLink: "https://steampy.com", steamcici: "35", steamciciOriginal: "169", steamciciLink: "https://steamcici.com" } },
+            { id: 47, name: "控制", nameEn: "Control", brand: "Remedy Entertainment", description: "超自然动作冒险游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/870780/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2019年8月27日", size: "40GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "49", steamOriginal: "148", steamLink: "https://store.steampowered.com/app/870780", epic: "49", epicOriginal: "148", epicLink: "https://store.epicgames.com/zh-CN/p/control", steampy: "39", steampyOriginal: "128", steampyLink: "https://steampy.com", steamcici: "35", steamciciOriginal: "118", steamciciLink: "https://steamcici.com" } },
+            { id: 48, name: "死亡搁浅", nameEn: "Death Stranding", brand: "Kojima Productions", description: "小岛秀夫的科幻动作冒险", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1190460/library_600x900.jpg", specs: { genre: "动作冒险", releaseDate: "2020年7月14日", size: "80GB", language: "简体中文", players: "单人", rating: "特别好评" }, prices: { steam: "79", steamOriginal: "198", steamLink: "https://store.steampowered.com/app/1190460", epic: "79", epicOriginal: "198", epicLink: "https://store.epicgames.com/zh-CN/p/death-stranding", steampy: "65", steampyOriginal: "178", steampyLink: "https://steampy.com", steamcici: "60", steamciciOriginal: "168", steamciciLink: "https://steamcici.com" } },
+            { id: 49, name: "黎明杀机", nameEn: "Dead by Daylight", brand: "Behaviour Interactive", description: "非对称恐怖生存游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/381210/library_600x900.jpg", specs: { genre: "恐怖生存", releaseDate: "2016年6月14日", size: "50GB", language: "简体中文", players: "多人", rating: "特别好评" }, prices: { steam: "49", steamOriginal: "98", steamLink: "https://store.steampowered.com/app/381210", epic: "49", epicOriginal: "98", epicLink: "https://store.epicgames.com/zh-CN/p/dead-by-daylight", steampy: "39", steampyOriginal: "88", steampyLink: "https://steampy.com", steamcici: "35", steamciciOriginal: "78", steamciciLink: "https://steamcici.com" } },
+            { id: 50, name: "Grounded", nameEn: "Grounded", brand: "Obsidian Entertainment", description: "微型生存冒险游戏", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/962130/library_600x900.jpg", specs: { genre: "生存冒险", releaseDate: "2022年9月27日", size: "40GB", language: "简体中文", players: "单人/多人", rating: "特别好评" }, prices: { steam: "49", steamOriginal: "98", steamLink: "https://store.steampowered.com/app/962130", epic: "49", epicOriginal: "98", epicLink: "https://store.epicgames.com/zh-CN/p/grounded", steampy: "39", steampyOriginal: "88", steampyLink: "https://steampy.com", steamcici: "35", steamciciOriginal: "78", steamciciLink: "https://steamcici.com" } }
         ];
-
-        const gamesGrid = document.getElementById('gamesGrid');
-        const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const suggestions = document.getElementById('suggestions');
-        const compareModal = document.getElementById('compareModal');
-        const closeBtn = document.getElementById('closeBtn');
-
-        document.getElementById('totalCount').textContent = games.length;
-
+        
+        // 初始化页面
+        function init() {
+            renderGames(games);
+            updateTotalCount();
+            updateLastRefresh();
+            setupSearch();
+            setupModal();
+        }
+        
+        // 渲染游戏卡片
         function renderGames(gameList) {
-            gamesGrid.innerHTML = '';
+            const grid = document.getElementById('gamesGrid');
+            grid.innerHTML = '';
+            
             if (gameList.length === 0) {
-                gamesGrid.innerHTML = '<div class="no-results">未找到匹配的游戏</div>';
+                grid.innerHTML = '<div class="no-results">没有找到匹配的游戏</div>';
                 return;
             }
+            
             gameList.forEach(game => {
                 const card = document.createElement('div');
                 card.className = 'game-card';
-                card.onclick = () => showCompareModal(game);
-                card.innerHTML = `
-                    <img src="${game.image}" alt="${game.name}" onerror="this.src='https://via.placeholder.com/400x300?text=${encodeURIComponent(game.name)}'">
-                    <h3>${game.name}</h3>
-                    <p>品牌：${game.brand}</p>
-                    <p>${game.description}</p>
-                    <p style="margin-top:10px;font-weight:bold;">¥${game.prices.steam}起</p>
+                card.onclick = () => openModal(game);
+                
+                const pricesHTML = `
+                    <div class="prices-row">
+                        <div class="price-item-small">
+                            <span class="platform">Steam</span>
+                            <span class="prices">
+                                ${game.prices.steamOriginal !== game.prices.steam && game.prices.steamOriginal !== '-' ? `<span class="original">¥${game.prices.steamOriginal}</span>` : ''}
+                                <span class="current">¥${game.prices.steam}</span>
+                            </span>
+                        </div>
+                        <div class="price-item-small">
+                            <span class="platform">Epic</span>
+                            <span class="prices">
+                                ${game.prices.epic !== '暂无' && game.prices.epicOriginal !== game.prices.epic && game.prices.epicOriginal !== '-' ? `<span class="original">¥${game.prices.epicOriginal}</span>` : ''}
+                                <span class="current">${game.prices.epic === '暂无' ? '暂无' : '¥' + game.prices.epic}</span>
+                            </span>
+                        </div>
+                        <div class="price-item-small">
+                            <span class="platform">SteamPY</span>
+                            <span class="prices">
+                                ${game.prices.steampyOriginal !== game.prices.steampy ? `<span class="original">¥${game.prices.steampyOriginal}</span>` : ''}
+                                <span class="current">¥${game.prices.steampy}</span>
+                            </span>
+                        </div>
+                        <div class="price-item-small">
+                            <span class="platform">SteamCICI</span>
+                            <span class="prices">
+                                ${game.prices.steamciciOriginal !== game.prices.steamcici ? `<span class="original">¥${game.prices.steamciciOriginal}</span>` : ''}
+                                <span class="current">¥${game.prices.steamcici}</span>
+                            </span>
+                        </div>
+                    </div>
                 `;
-                gamesGrid.appendChild(card);
+                
+                card.innerHTML = `
+                    <img src="${game.image}" alt="${game.name}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 170%22><rect fill=%22%231a1a2e%22 width=%22300%22 height=%22170%22/><text x=%22150%22 y=%2285%22 text-anchor=%22middle%22 fill=%22%23e94560%22 font-size=%2220%22>游戏封面</text></svg>'">
+                    <div class="game-card-content">
+                        <h3>${game.name}</h3>
+                        <div class="name-en">${game.nameEn}</div>
+                        <div class="brand">${game.brand}</div>
+                        ${pricesHTML}
+                    </div>
+                `;
+                
+                grid.appendChild(card);
             });
         }
-
-        function showSuggestions(keyword) {
-            if (!keyword || keyword.length === 0) {
+        
+        // 更新游戏总数
+        function updateTotalCount() {
+            document.getElementById('totalCount').textContent = `共收录 ${games.length} 款游戏`;
+        }
+        
+        // 更新最后刷新时间
+        function updateLastRefresh() {
+            const now = new Date();
+            const timeStr = now.toLocaleString('zh-CN');
+            document.getElementById('lastRefresh').textContent = `价格数据更新于: ${timeStr}`;
+        }
+        
+        // 设置搜索功能
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const suggestions = document.getElementById('suggestions');
+            
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                if (query.length === 0) {
+                    suggestions.classList.remove('active');
+                    renderGames(games);
+                    return;
+                }
+                
+                const results = games.filter(game => 
+                    game.name.toLowerCase().includes(query) || 
+                    game.nameEn.toLowerCase().includes(query) ||
+                    game.brand.toLowerCase().includes(query)
+                );
+                
+                renderSuggestions(results);
+                renderGames(results);
+            });
+            
+            searchBtn.addEventListener('click', () => {
+                const query = searchInput.value.toLowerCase().trim();
+                if (query.length === 0) {
+                    renderGames(games);
+                    return;
+                }
+                
+                const results = games.filter(game => 
+                    game.name.toLowerCase().includes(query) || 
+                    game.nameEn.toLowerCase().includes(query) ||
+                    game.brand.toLowerCase().includes(query)
+                );
+                
+                renderGames(results);
+                suggestions.classList.remove('active');
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.search-wrapper')) {
+                    suggestions.classList.remove('active');
+                }
+            });
+        }
+        
+        // 渲染搜索建议
+        function renderSuggestions(gameList) {
+            const suggestions = document.getElementById('suggestions');
+            suggestions.innerHTML = '';
+            
+            if (gameList.length === 0) {
                 suggestions.classList.remove('active');
                 return;
             }
-            const filtered = games.filter(game => 
-                game.name.toLowerCase().includes(keyword.toLowerCase()) ||
-                game.brand.toLowerCase().includes(keyword.toLowerCase()) ||
-                game.description.toLowerCase().includes(keyword.toLowerCase())
-            );
-            if (filtered.length === 0) {
-                suggestions.innerHTML = `
-                    <div class="suggestion-item" style="text-align: center; color: #999;">
-                        未找到匹配的游戏
-                    </div>
-                `;
-                suggestions.classList.add('active');
-                return;
-            }
-            suggestions.innerHTML = filtered.map(game => {
-                let priceInfo = [];
-                if (game.prices.steam !== '暂无') priceInfo.push(`<span style="color: #333;">Steam ¥${game.prices.steam}</span>`);
-                if (game.prices.epic !== '暂无') priceInfo.push(`<span style="color: #666;">EPIC ¥${game.prices.epic}</span>`);
-                if (game.prices.steampy !== '暂无') priceInfo.push(`<span style="color: #FF6B6B;">SteamPY ${game.prices.steampy}</span>`);
-                if (game.prices.steamcici !== '暂无') priceInfo.push(`<span style="color: #4ECDC4;">SteamCICI ${game.prices.steamcici}</span>`);
+            
+            gameList.slice(0, 8).forEach(game => {
+                const item = document.createElement('div');
+                item.className = 'suggestion-item';
+                item.onclick = (e) => {
+                    e.stopPropagation();
+                    openModal(game);
+                    document.getElementById('suggestions').classList.remove('active');
+                };
                 
-                return `
-                <div class="suggestion-item" onclick="selectGame(${game.id})">
-                    <img src="${game.image}" alt="${game.name}" onerror="this.src='https://via.placeholder.com/70x70?text=${encodeURIComponent(game.name)}'">
+                item.innerHTML = `
+                    <img src="${game.image}" alt="${game.name}">
                     <div class="suggestion-info">
                         <h4>${game.name}</h4>
-                        <p>${game.brand} · ${game.specs.genre}</p>
-                        <p style="margin-top:4px;line-height:1.4;">${priceInfo.join(' · ')}</p>
+                        <p>${game.nameEn}</p>
+                        <p>¥${game.prices.steam}</p>
                     </div>
-                </div>
-            `}).join('');
+                `;
+                
+                suggestions.appendChild(item);
+            });
+            
             suggestions.classList.add('active');
         }
-
-        function selectGame(id) {
-            const game = games.find(g => g.id === id);
-            if (game) {
-                suggestions.classList.remove('active');
-                searchInput.value = game.name;
-                renderGames([game]);
-                showCompareModal(game);
-            }
+        
+        // 设置模态框
+        function setupModal() {
+            const modal = document.getElementById('compareModal');
+            const closeBtn = document.getElementById('closeBtn');
+            
+            closeBtn.onclick = () => {
+                modal.style.display = 'none';
+            };
+            
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            };
         }
-
-        function showCompareModal(game) {
+        
+        // 打开游戏详情模态框
+        function openModal(game) {
+            const modal = document.getElementById('compareModal');
+            
             document.getElementById('modalGameImage').src = game.image;
-            document.getElementById('modalGameImage').onerror = function() { this.src = `https://via.placeholder.com/200x200?text=${encodeURIComponent(game.name)}`; };
             document.getElementById('modalGameName').textContent = game.name;
-            document.getElementById('modalGameBrand').textContent = '开发商：' + game.brand;
+            document.getElementById('modalGameNameEn').textContent = game.nameEn;
+            document.getElementById('modalGameBrand').textContent = game.brand;
             document.getElementById('modalGameDesc').textContent = game.description;
-            document.getElementById('priceSteam').textContent = '¥' + game.prices.steam;
-            document.getElementById('priceEpic').textContent = '¥' + game.prices.epic;
-            document.getElementById('priceSteamPY').textContent = '¥' + game.prices.steampy;
-            document.getElementById('priceSteamCICI').textContent = '¥' + game.prices.steamcici;
-            document.getElementById('linkSteam').href = game.prices.steamLink;
-            document.getElementById('linkEpic').href = game.prices.epicLink;
-            document.getElementById('linkSteamPY').href = game.prices.steampyLink;
-            document.getElementById('linkSteamCICI').href = game.prices.steamciciLink;
-            document.getElementById('specsGrid').innerHTML = `
-                <div class="spec-item"><span class="spec-label">游戏类型</span><span class="spec-value">${game.specs.genre}</span></div>
-                <div class="spec-item"><span class="spec-label">发行日期</span><span class="spec-value">${game.specs.releaseDate}</span></div>
-                <div class="spec-item"><span class="spec-label">游戏大小</span><span class="spec-value">${game.specs.size}</span></div>
-                <div class="spec-item"><span class="spec-label">支持语言</span><span class="spec-value">${game.specs.language}</span></div>
-                <div class="spec-item"><span class="spec-label">玩家人数</span><span class="spec-value">${game.specs.players}</span></div>
-                <div class="spec-item"><span class="spec-label">游戏评价</span><span class="spec-value">${game.specs.rating}</span></div>
-            `;
-            compareModal.style.display = 'flex';
+            
+            // 渲染价格对比
+            const priceComparison = document.getElementById('priceComparison');
+            const platforms = [
+                { name: 'Steam', price: game.prices.steam, original: game.prices.steamOriginal, link: game.prices.steamLink },
+                { name: 'Epic', price: game.prices.epic, original: game.prices.epicOriginal, link: game.prices.epicLink }
+            ];
+            
+            if (game.prices.steampy) {
+                platforms.push({ name: 'SteamPY', price: game.prices.steampy, original: game.prices.steampyOriginal, link: game.prices.steampyLink });
+            }
+            if (game.prices.steamcici) {
+                platforms.push({ name: 'SteamCICI', price: game.prices.steamcici, original: game.prices.steamciciOriginal, link: game.prices.steamciciLink });
+            }
+            
+            priceComparison.innerHTML = platforms.map(p => `
+                <div class="price-item">
+                    <div class="platform">${p.name}</div>
+                    <div class="price-value">${p.price === '暂无' ? '暂无' : '¥' + p.price}</div>
+                    ${p.original && p.original !== '-' && p.original !== p.price ? `<div class="price-original">¥${p.original}</div>` : ''}
+                    ${p.price !== '暂无' ? `<a href="${p.link}" target="_blank" class="buy-btn">购买</a>` : ''}
+                </div>
+            `).join('');
+            
+            // 渲染游戏规格
+            const specsGrid = document.getElementById('specsGrid');
+            specsGrid.innerHTML = Object.entries(game.specs).map(([key, value]) => {
+                const labels = {
+                    genre: '游戏类型',
+                    releaseDate: '发售日期',
+                    size: '游戏大小',
+                    language: '支持语言',
+                    players: '玩家人数',
+                    rating: '用户评分'
+                };
+                return `
+                    <div class="spec-item">
+                        <div class="spec-label">${labels[key] || key}</div>
+                        <div class="spec-value">${value}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            modal.style.display = 'flex';
         }
-
-        renderGames(games);
-
-        searchInput.addEventListener('input', (e) => {
-            showSuggestions(e.target.value);
-        });
-
-        searchBtn.addEventListener('click', () => {
-            const keyword = searchInput.value.trim();
-            const filtered = games.filter(game => 
-                game.name.toLowerCase().includes(keyword.toLowerCase()) ||
-                game.brand.toLowerCase().includes(keyword.toLowerCase())
-            );
-            suggestions.classList.remove('active');
-            renderGames(filtered);
-        });
-
-        searchInput.addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') {
-                searchBtn.click();
-            }
-        });
-
-        closeBtn.addEventListener('click', () => {
-            compareModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (!e.target.closest('.search-wrapper')) {
-                suggestions.classList.remove('active');
-            }
-            if (e.target === compareModal) {
-                compareModal.style.display = 'none';
-            }
-        });
+        
+        // 刷新价格
+        function refreshPrices() {
+            const btn = document.getElementById('refreshBtn');
+            btn.classList.add('refreshing');
+            btn.disabled = true;
+            
+            // 模拟刷新
+            setTimeout(() => {
+                updateLastRefresh();
+                btn.classList.remove('refreshing');
+                btn.disabled = false;
+            }, 1000);
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
